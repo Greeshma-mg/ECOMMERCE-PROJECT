@@ -1,0 +1,130 @@
+const products = [
+  {
+    id: '1',
+    name: 'Aloe Vera Gel',
+    category: 'skincare',
+    image: '/images/aloevera.jpg',
+    price: 199,
+    description: 'Soothing & hydrating aloe vera gel.',
+  },
+  {
+    id: '2',
+    name: 'Face Wash',
+    category: 'skincare',
+    image: '/images/facewash.jpg',
+    price: 149,
+    description: 'Gentle foaming face wash.',
+  },
+  {
+    id: '3',
+    name: 'Herbal Shampoo',
+    category: 'haircare',
+    image: '/images/shampoo.jpg',
+    price: 299,
+    description: 'Nourishing shampoo for all hair types.',
+  },
+  {
+    id: '4',
+    name: 'Baby Lotion',
+    category: 'babycare',
+    image: '/images/bodylotion.jpg',
+    price: 249,
+    description: 'Mild lotion for baby-soft skin.',
+  },
+  {
+    id: '5',
+    name: 'Sunscreen',
+    category: 'skincare',
+    image: '/images/sunscreen.jpg',
+    price: 99,
+    description: 'Protective sunscreen for all skin types.',
+  },
+
+  {
+    id: '1',
+    name: "Hydrating Face Cream",
+    category: "skincare",
+    image: "/images/skin1.jpg",
+    price: 499,
+    description: "Deeply moisturizes and hydrates skin.",
+  },
+  {
+    id: '2',
+    name: "Brightening Cream",
+    category: "skincare",
+    image: "/images/skin2.jpg",
+    price: 399,
+    description: "Brightens and evens out skin tone.",
+  },
+  {
+    id: '3',
+    name: "Brightening Cream",
+    category: "skincare",
+    image: "/images/skin3.jpg",
+    price: 299,
+    description: "Lightens spots and blemishes.",
+  },
+  {
+    id: '4',
+    name: "Whitening Serum",
+    category: "skincare",
+    image: "/images/skin4.jpg",
+    price: 199,
+    description: "Skin whitening & glow boosting serum.",
+  },
+
+
+  {
+    id: '6',
+    name: "Hair Oil",
+    category: "haircare",
+    image: "/images/hair.jpg",
+    price: 199,
+    description: "Nourishing and non-sticky formula.",
+  },
+  {
+    id: '7',
+    name: "Hair Serum",
+    category: "haircare",
+    image: "/images/hair2.jpg",
+    price: 299,
+    description: "Reduces frizz and adds shine.",
+  },
+  {
+    id: '8',
+    name: "Hair Mask",
+    category: "haircare",
+    image: "/images/hair3.jpg",
+    price: 399,
+    description: "Deep conditioning treatment for dry hair.",
+  },
+
+  // 👶 Baby Care
+  
+  {
+    id: '10',
+    name: "Baby Wash",
+    category: "babycare",
+    image: "/images/baby2.jpeg",
+    price: 399,
+    description: "Mild baby body wash.",
+  },
+  {
+    id: '11',
+    name: "Baby Cream",
+    category: "babycare",
+    image: "/images/baby3.jpg",
+    price: 299,
+    description: "Moisturizes baby's delicate skin.",
+  },
+  {
+    id: '12',
+    name: "Gentle Baby Wash",
+    category: "babycare",
+    image: "/images/baby1.jpg",
+    price: 199,
+    description: "Tear-free gentle baby wash.",
+  },
+];
+
+export default products;
