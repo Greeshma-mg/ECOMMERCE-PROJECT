@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import '../assets/Home.css';
@@ -20,6 +20,7 @@ function Home() {
     const updatedCart = [...existingCart, product];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     alert(`${product.name} added to cart!`);
+    navigate('/cart'); // 🔄 Navigate to Cart after adding
   };
 
   const categorySections = [
