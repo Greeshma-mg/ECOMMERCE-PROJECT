@@ -9,7 +9,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch('https://ecommerce-backend-lty1.onrender.com/api/products')
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.log(err));
@@ -97,12 +97,12 @@ function Home() {
       <div className="home">
 
         {/* 🌸 Category Sections */}
-        {categorySections.map((section, index) => (
-          <section className="category-section" key={index}>
+        {categorySections.map((section) => (
+          <section className="category-section" key={section.title}>
             <h2>{section.title}</h2>
             <div className="product-grid">
-              {section.items.map((item, idx) => (
-                <div className="product-card" key={idx}>
+              {section.items.map((item) => (
+                <div className="product-card" key={`${item.name}-${item.image}`}>
                   <img src={item.image} alt={item.name} />
                   <h4>{item.name}</h4>
                   <p>₹{item.price}</p>
