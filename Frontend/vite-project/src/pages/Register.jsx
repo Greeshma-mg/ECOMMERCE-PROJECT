@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { useHistory } from 'react-router-dom'; // For navigation after registration
 
 function Register() {
   const [formData, setFormData] = useState({
     name: '', email: '', password: ''
   });
 
+  const history = useHistory();
+
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = e => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log('Register:', formData);
+    
+    try {
+      const res = await fetch('https://ecommerce-backend-lty1.onrender.com/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Registration successful!');
+        // Redirect to login page
+        history.push('/login');
+      } else {
+        alert(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Something went wrong');
+    }
   };
 
   return (
@@ -26,7 +49,7 @@ function Register() {
       </form>
 
       <div className="login-link">
-        <p>Already have an account? <Link to="/login">Login</Link></p> {/* Link to Login page */}
+        <p>Already have an account? <Link to="/login">Login</Link></p>
       </div>
     </div>
   );

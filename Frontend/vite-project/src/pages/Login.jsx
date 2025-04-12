@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'; // For navigation after login
 import '../assets/Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,8 +24,8 @@ function Login() {
       if (res.ok) {
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        // Redirect if needed
-        // window.location.href = '/';
+        // Redirect to homepage after login
+        history.push('/');
       } else {
         alert(data.message || 'Login failed');
       }

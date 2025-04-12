@@ -5,22 +5,20 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// Register user
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     
-    // Check if user exists
+    
     const userExist = await User.findOne({ email });
     if (userExist) return res.status(400).json({ message: 'User already exists' });
     
-    // Hash password
+  
     const hashed = await bcrypt.hash(password, 10);
     
-    // Create user
+ 
     const user = await User.create({ name, email, password: hashed });
     
-    // Generate token
     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
     
     res.status(201).json({ token });
@@ -34,15 +32,12 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Find user
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'User not found' });
     
-    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
     
-    // Generate token
     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
     
     res.json({ token });
@@ -51,7 +46,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Get all users (admin only)
 router.get('/users', protect, adminOnly, async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -61,7 +55,6 @@ router.get('/users', protect, adminOnly, async (req, res) => {
   }
 });
 
-// Get user by ID
 router.get('/users/:id', protect, async (req, res) => {
   try {
     if (req.user._id.toString() !== req.params.id && req.user.role !== 'admin') {
@@ -97,7 +90,6 @@ router.put('/users/:id', protect, async (req, res) => {
   }
 });
 
-// Delete user (admin only)
 router.delete('/users/:id', protect, adminOnly, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
