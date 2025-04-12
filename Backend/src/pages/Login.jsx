@@ -9,6 +9,8 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log('Login function called');
+
     setError('');
     setLoading(true);
     
