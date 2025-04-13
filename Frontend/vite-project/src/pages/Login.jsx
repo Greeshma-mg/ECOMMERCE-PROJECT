@@ -8,8 +8,8 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // ✅ Prevent page refresh
-    console.log('Login submitted with:', { email, password }); // ✅ Confirm function triggered
+    e.preventDefault();
+    console.log('Login submitted with:', { email, password });
 
     setLoading(true);
     setErrorMessage('');
@@ -24,14 +24,33 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log('Server response:', data); // ✅ Show backend response
+      console.log('Server response:', data);
 
       if (res.ok && data.token) {
         localStorage.setItem('token', data.token);
-        alert('Login successful!');
-        window.location.href = '/';
+        
+        // Verify the token immediately to ensure it's valid
+        try {
+          const verifyRes = await fetch('https://ecommerce-backend-lty1.onrender.com/api/auth/verify', {
+            headers: {
+              'Authorization': `Bearer ${data.token}`
+            }
+          });
+          
+          if (verifyRes.ok) {
+            alert('Login successful!');
+            window.location.href = '/';
+          } else {
+            setErrorMessage('Authentication failed. Please try again.');
+            localStorage.removeItem('token');
+          }
+        } catch (verifyError) {
+          console.error('Verification error:', verifyError);
+          setErrorMessage('Authentication verification failed. Please try again.');
+          localStorage.removeItem('token');
+        }
       } else {
-        setErrorMessage(data.message || 'Invalid credentials');
+        setErrorMessage(data.msg || 'Invalid credentials');
       }
     } catch (error) {
       console.error('Network/login error:', error);
