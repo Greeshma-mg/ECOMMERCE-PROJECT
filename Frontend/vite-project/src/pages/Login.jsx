@@ -4,14 +4,13 @@ import '../assets/Login.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State for error message
-  const [loading, setLoading] = useState(false); // Loading state for button
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-    setErrorMessage(''); // Clear any previous errors
+    setErrorMessage('');
 
     try {
       const res = await fetch('https://ecommerce-backend-lty1.onrender.com/api/auth/login', {
@@ -23,18 +22,20 @@ function Login() {
       });
 
       const data = await res.json();
+      console.log('Login response:', data); // ✅ Debugging info
 
-      if (res.ok) {
+      if (res.ok && data.token) {
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        window.location.href = '/'; // Redirect to home or dashboard
+        window.location.href = '/'; // Redirect to homepage
       } else {
-        setErrorMessage(data.message || 'Login failed'); // Display error message
+        setErrorMessage(data.message || 'Invalid credentials');
       }
     } catch (error) {
       console.error('Login error:', error);
-      setErrorMessage('Something went wrong. Please try again.'); // Handle network or other errors
+      setErrorMessage('Unable to connect to the server. Please try again later.');
     }
+
     setLoading(false);
   };
 
@@ -45,12 +46,14 @@ function Login() {
         <input
           type="email"
           placeholder="Email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
@@ -59,7 +62,7 @@ function Login() {
         </button>
       </form>
 
-      {/* Display error message if any */}
+      {/* Error Message Display */}
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
