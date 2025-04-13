@@ -28,7 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* ✅ Protected Routes */}
+          {/* Protected Routes */}
           <Route path="/cart" element={
             <PrivateRoute>
               <Cart />

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // For navigation after login
 import '../assets/Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const [loading, setLoading] = useState(false); // Loading state for button
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+    setErrorMessage(''); // Clear any previous errors
 
     try {
       const res = await fetch('https://ecommerce-backend-lty1.onrender.com/api/auth/login', {
@@ -24,15 +27,15 @@ function Login() {
       if (res.ok) {
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        // Redirect to homepage after login
-        history.push('/');
+        window.location.href = '/'; // Redirect to home or dashboard
       } else {
-        alert(data.message || 'Login failed');
+        setErrorMessage(data.message || 'Login failed'); // Display error message
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Something went wrong');
+      setErrorMessage('Something went wrong. Please try again.'); // Handle network or other errors
     }
+    setLoading(false);
   };
 
   return (
@@ -42,17 +45,22 @@ function Login() {
         <input
           type="email"
           placeholder="Email"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Password"
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
+
+      {/* Display error message if any */}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 }
