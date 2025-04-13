@@ -8,7 +8,9 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // ✅ Prevent page refresh
+    console.log('Login submitted with:', { email, password }); // ✅ Confirm function triggered
+
     setLoading(true);
     setErrorMessage('');
 
@@ -22,18 +24,18 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log('Login response:', data); // ✅ Debugging info
+      console.log('Server response:', data); // ✅ Show backend response
 
       if (res.ok && data.token) {
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        window.location.href = '/'; // Redirect to homepage
+        window.location.href = '/';
       } else {
         setErrorMessage(data.message || 'Invalid credentials');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setErrorMessage('Unable to connect to the server. Please try again later.');
+      console.error('Network/login error:', error);
+      setErrorMessage('Server unreachable. Please try again later.');
     }
 
     setLoading(false);
@@ -62,7 +64,6 @@ function Login() {
         </button>
       </form>
 
-      {/* Error Message Display */}
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
