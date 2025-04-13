@@ -1,4 +1,3 @@
-// client/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -11,7 +10,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Payment from './pages/Payment'; 
 
-// Components (Optional)
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 

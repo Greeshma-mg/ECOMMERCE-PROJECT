@@ -1,4 +1,3 @@
-// client/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -6,14 +5,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import CategoryPage from './pages/CategoryPage.jsx';
-import Cart from './pages/Cart'
+import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Payment from './pages/Payment'; 
 
-// Components (Optional)
+// Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PrivateRoute from './components/PrivateRoute'; // ✅ Import it
 
 function App() {
   return (
@@ -25,15 +25,23 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/category/:name" element={<CategoryPage />} />
-          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/payment" element={<Payment />} />
 
+          {/* ✅ Protected Routes */}
+          <Route path="/cart" element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          } />
+          <Route path="/payment" element={
+            <PrivateRoute>
+              <Payment />
+            </PrivateRoute>
+          } />
         </Routes>
 
         <Footer />
-
       </div>
     </Router>
   );
